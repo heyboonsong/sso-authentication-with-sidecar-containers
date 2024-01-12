@@ -1,0 +1,74 @@
+version: "3"
+
+services:
+  album:
+    container_name: album-service
+    build:
+      context: .
+      dockerfile: ./apps/album/Dockerfile
+    image: heyboonsong/learning:album-service
+    restart: always
+    ports:
+      - 3007:3007
+    networks:
+      - app_network
+  comment:
+    container_name: comment-service
+    build:
+      context: .
+      dockerfile: ./apps/comment/Dockerfile
+    image: heyboonsong/learning:comment-service
+    restart: always
+    ports:
+      - 3002:3002
+    networks:
+      - app_network
+  photo:
+    container_name: photo-service
+    build:
+      context: .
+      dockerfile: ./apps/photo/Dockerfile
+    image: heyboonsong/learning:photo-service
+    restart: always
+    ports:
+      - 3004:3004
+    networks:
+      - app_network
+  post:
+    container_name: post-service
+    build:
+      context: .
+      dockerfile: ./apps/post/Dockerfile
+    image: heyboonsong/learning:post-service
+    restart: always
+    ports:
+      - 3001:3001
+    networks:
+      - app_network
+  todo:
+    container_name: todo-service
+    build:
+      context: .
+      dockerfile: ./apps/todo/Dockerfile
+    image: heyboonsong/learning:todo-service
+    restart: always
+    ports:
+      - 3003:3003
+    networks:
+      - app_network
+  user:
+    container_name: user-service
+    build:
+      context: .
+      dockerfile: ./apps/user/Dockerfile
+    image: heyboonsong/learning:user-service
+    restart: always
+    ports:
+      - 3005:3005
+    networks:
+      - app_network
+# Define a network, which allows containers to communicate
+# with each other, by using their container name as a hostname
+networks:
+  app_network:
+    external: true

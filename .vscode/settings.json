@@ -1,0 +1,6 @@
+{
+  "yaml.schemas": {
+    "kubernetes://schema/apps/v1@deployment": "file:///Users/heyboonsong/Workspaces/learning/blogs/sidebff/bff/mobile-bff/k8s/deployment.yml"
+  },
+  "java.configuration.updateBuildConfiguration": "interactive"
+}

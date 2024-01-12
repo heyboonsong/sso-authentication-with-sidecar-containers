@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: mobile-bff
+  name: mobile-bff
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: mobile-bff
+  template:
+    metadata:
+      labels:
+        app: mobile-bff
+    spec:
+      containers:
+        - image: heyboonsong/learning:mobile-bff
+          name: learning-mobile-bff
+          securityContext:
+            privileged: false
+            allowPrivilegeEscalation: false
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "200Mi"
+              ephemeral-storage: "100Mi"
+            limits:
+              cpu: "500m"
+              memory: "500Mi" 
+              ephemeral-storage: "200Mi"
+          env:
+            - name: POST_URL
+              value: http://post-service
+            - name: COMMENT_URL
+              value: http://comment-service
+          ports:
+            - name: http
+              containerPort: 8000
+        - image: heyboonsong/learning:auth-proxy
+          name: learning-auth-proxy
+          securityContext:
+            privileged: false
+            allowPrivilegeEscalation: false
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "200Mi"
+              ephemeral-storage: "100Mi"
+            limits:
+              cpu: "500m"
+              memory: "500Mi" 
+              ephemeral-storage: "200Mi"
+          env:
+            - name: KEYCLOAK_URL
+              value: http://keycloak:9001
+            - name: BFF_URL
+              value: http://localhost:8000
+          ports:
+            - name: http
+              containerPort: 8080
+      restartPolicy: Always

@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: album-service
+  name: album-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: album-service
+  template:
+    metadata:
+      labels:
+        app: album-service
+    spec:
+      containers:
+        - image: heyboonsong/learning:album-service
+          name: learning-album-service
+          securityContext:
+            privileged: false
+            allowPrivilegeEscalation: false
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "200Mi"
+              ephemeral-storage: "100Mi"
+            limits:
+              cpu: "500m"
+              memory: "500Mi" 
+              ephemeral-storage: "200Mi"
+          ports:
+            - name: http
+              containerPort: 3007
+      restartPolicy: Always
